@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --backdrop: #0F1722;
+    --front: #364357;
+    --keys: #2E2E2E;
+    --operator-keys: #272727;
+    --operator-color: #FFA401;
+    --main-color: #ffffff;
+    --equals: #018645;
+}
