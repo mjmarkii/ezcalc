@@ -1,8 +1,12 @@
+import React from 'react'
+
 function App() {
   return (
-    <h1 className="text-[#123456] text-3xl font-bold">
-      Hello world!
-    </h1>
+    <div className="h-screen w-100 flex justify-center items-center">
+      <div id="calculator">
+        HellO!
+      </div>
+    </div>
   )
 }
 
