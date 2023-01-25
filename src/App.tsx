@@ -24,8 +24,8 @@ function App() {
   return (
     <div className="h-screen w-100 flex flex-col justify-center items-center bg-backdrop">
       <div id="calc" className="bg-front w-2/3 xs:w-1/3 md:w-2/3 lg:w-1/2 xl:w-1/4">
-        <p id="calc-small-output" className="px-5 pt-5 mb-2 text-gray-400 text-xl font-medium text-right invisible">{secExpression}</p>
-        <p id="calc-output" className="px-5 pb-5 text-main-color text-5xl font-medium text-right">{expression}</p>
+        <p id="calc-small-output" className="mx-5 pt-5 mb-2 text-gray-400 text-xl font-medium overflow-hidden rtl invisible">{secExpression}</p>
+        <p id="calc-output" className="mx-5 pb-5 text-main-color text-5xl font-medium overflow-hidden rtl">{expression}</p>
         <div id="calc-keys" className="flex flex-wrap justify-between items-start">
           {/* First Row */}
           <button className="py-4 text-center font-semibold text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">DEL</button>

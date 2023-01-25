@@ -12,3 +12,7 @@
     --main-color: #ffffff;
     --equals: #018645;
 }
+
+.rtl {
+    direction: rtl;
+}
