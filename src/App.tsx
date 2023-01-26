@@ -6,6 +6,8 @@ function App() {
   const [secExpression, setSecExpression] = useState("0")
   const [isOperatorPressed, setIsOperatorPressed] = useState(false)
   const [isDecimalPressed, setIsDecimalPressed] = useState(false)
+  const [isPlusMinusPressed, setIsPlusMinusPressed] = useState(false)
+  const [isPercentPressed, setIsPercentPressed] = useState(false)
 
   const showDigitInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
@@ -34,8 +36,26 @@ function App() {
         setIsOperatorPressed(false)
         setExpression(expression + point)
       }
-      
+
       setIsDecimalPressed(true)
+    }
+  }
+
+  const showPlusMinus = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault()
+    let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
+
+    let plusMinus: string = (e.target as Element).innerHTML
+
+    if (!expression.startsWith('0') || expression.startsWith('0.')) {
+      // true if +, false if -
+      if (!isPlusMinusPressed) {
+        setExpression(`-${expression}`)
+        setIsPlusMinusPressed(true)
+      } else {
+        setExpression(expression.slice(1))
+        setIsPlusMinusPressed(false)
+      }
     }
   }
 
@@ -47,7 +67,7 @@ function App() {
         <div id="calc-keys" className="flex flex-wrap justify-between items-start">
           {/* First Row */}
           <button className="py-4 text-center font-semibold text-keys-color text-3xl bg-keys w-1/4 hover:bg-hover">AC</button>
-          <button className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">+/-</button>
+          <button onClick={(e) => showPlusMinus(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">+/-</button>
           <button className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">%</button>
           <button className="py-4 text-center text-3xl font-bold bg-operator-keys text-operator-color w-1/4 hover:bg-hover">&divide;</button>
 
