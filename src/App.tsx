@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { create, all } from 'mathjs'
 
 function App() {
   const [expression, setExpression] = useState("0")
@@ -7,11 +8,11 @@ function App() {
   const [isOperatorPressed, setIsOperatorPressed] = useState(false)
   const [isDecimalPressed, setIsDecimalPressed] = useState(false)
   const [isPlusMinusPressed, setIsPlusMinusPressed] = useState(false)
-  const [isPercentPressed, setIsPercentPressed] = useState(false)
+
+  const math = create(all, {})
 
   const showDigitInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
-    let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
 
     let digit: string = (e.target as Element).innerHTML
 
@@ -26,7 +27,6 @@ function App() {
 
   const showDecimalPointInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
-    let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
 
     let point: string = (e.target as Element).innerHTML
 
@@ -41,11 +41,8 @@ function App() {
     }
   }
 
-  const showPlusMinus = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const showPlusMinusInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
-    let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
-
-    let plusMinus: string = (e.target as Element).innerHTML
 
     if (!expression.startsWith('0') || expression.startsWith('0.')) {
       // true if +, false if -
@@ -59,6 +56,15 @@ function App() {
     }
   }
 
+  const showPercentInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault()
+
+    let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
+    let result = math.divide(math.bignumber(Number(mainScreen.innerHTML)), math.bignumber(100))
+
+    setExpression(result.toString())
+  }
+
   return (
     <div className="h-screen w-100 flex flex-col justify-center items-center bg-backdrop">
       <div id="calc" className="bg-front w-2/3 xs:w-1/3 md:w-2/3 lg:w-1/2 xl:w-1/4">
@@ -67,8 +73,8 @@ function App() {
         <div id="calc-keys" className="flex flex-wrap justify-between items-start">
           {/* First Row */}
           <button className="py-4 text-center font-semibold text-keys-color text-3xl bg-keys w-1/4 hover:bg-hover">AC</button>
-          <button onClick={(e) => showPlusMinus(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">+/-</button>
-          <button className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">%</button>
+          <button onClick={(e) => showPlusMinusInScreen(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">+/-</button>
+          <button onClick={(e) => showPercentInScreen(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">%</button>
           <button className="py-4 text-center text-3xl font-bold bg-operator-keys text-operator-color w-1/4 hover:bg-hover">&divide;</button>
 
           {/* Second Row */}
