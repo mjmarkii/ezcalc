@@ -1,19 +1,20 @@
-import { React, useState } from 'react'
+import React from 'react'
+import { useState } from 'react'
 
 function App() {
   const [expression, setExpression] = useState("0")
   const [secExpression, setSecExpression] = useState("0")
   const [isOperatorPressed, setIsOperatorPressed] = useState(false)
+  const [isDecimalPressed, setIsDecimalPressed] = useState(false)
 
   const showDigitInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
     let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
-    let secondaryScreen: HTMLParagraphElement = document.getElementById("calc-small-output") as HTMLParagraphElement
 
     let digit: string = (e.target as Element).innerHTML
 
     if (!isOperatorPressed) {
-      if (!expression.startsWith('0')) setExpression(expression + digit)
+      if (!expression.startsWith('0') || expression.startsWith('0.')) setExpression(expression + digit)
       else setExpression(digit)
     } else {
       setIsOperatorPressed(false)
@@ -21,14 +22,31 @@ function App() {
     }
   }
 
+  const showDecimalPointInScreen = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault()
+    let mainScreen: HTMLParagraphElement = document.getElementById("calc-output") as HTMLParagraphElement
+
+    let point: string = (e.target as Element).innerHTML
+
+    if (!isDecimalPressed) {
+      if (!isOperatorPressed) setExpression(expression + point)
+      else {
+        setIsOperatorPressed(false)
+        setExpression(expression + point)
+      }
+      
+      setIsDecimalPressed(true)
+    }
+  }
+
   return (
     <div className="h-screen w-100 flex flex-col justify-center items-center bg-backdrop">
       <div id="calc" className="bg-front w-2/3 xs:w-1/3 md:w-2/3 lg:w-1/2 xl:w-1/4">
-        <p id="calc-small-output" className="mx-5 pt-5 mb-2 text-gray-400 text-xl font-medium overflow-hidden rtl invisible">{secExpression}</p>
-        <p id="calc-output" className="mx-5 pb-5 text-main-color text-5xl font-medium overflow-hidden rtl">{expression}</p>
+        <p id="calc-small-output" className="mx-5 pt-5 mb-2 text-gray-400 text-xl font-medium overflow-hidden flex flex-1 justify-end items-end invisible">{secExpression}</p>
+        <p id="calc-output" className="mx-5 pb-5 text-main-color text-5xl font-medium overflow-hidden flex flex-1 justify-end items-end">{expression}</p>
         <div id="calc-keys" className="flex flex-wrap justify-between items-start">
           {/* First Row */}
-          <button className="py-4 text-center font-semibold text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">DEL</button>
+          <button className="py-4 text-center font-semibold text-keys-color text-3xl bg-keys w-1/4 hover:bg-hover">AC</button>
           <button className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">+/-</button>
           <button className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">%</button>
           <button className="py-4 text-center text-3xl font-bold bg-operator-keys text-operator-color w-1/4 hover:bg-hover">&divide;</button>
@@ -52,13 +70,13 @@ function App() {
           <button className="py-4 text-center text-3xl font-bold bg-operator-keys text-operator-color w-1/4 hover:bg-hover">+</button>
 
           {/* Fifth Row */}
-          <button className="py-4 text-center font-semibold text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">AC</button>
+          <button className="py-4 text-center font-semibold text-keys-color text-3xl bg-keys w-1/4 hover:bg-hover">&lt;</button>
           <button onClick={(e) => showDigitInScreen(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">0</button>
-          <button className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">.</button>
+          <button onClick={(e) => showDecimalPointInScreen(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">.</button>
           <button className="py-4 text-center text-3xl font-bold bg-equals text-white w-1/4">=</button>
         </div>
       </div>
-      <p className="text-xl font-medium italic text-white mt-5">EZCalc &copy; 2023</p>
+      <p className="text-xl font-medium italic text-white mt-5">EZCalc &copy; 2023 v0.0.1</p>
     </div>
   )
 }
