@@ -10,6 +10,7 @@ module.exports = {
         "backdrop": "var(--backdrop)",
         "front": "var(--front)",
         "keys": "var(--keys)",
+        "keys-color": "var(--keys-color)",
         "hover": "var(--hover)",
         "operator-keys": "var(--operator-keys)",
         "operator-color": "var(--operator-color)",
