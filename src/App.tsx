@@ -66,7 +66,7 @@ function App() {
   }
 
   const deleteCharacters = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e. preventDefault()
+    e.preventDefault()
 
     if (expression.length > 1) {
       if (expression[expression.length - 1] === ".") {
@@ -82,6 +82,19 @@ function App() {
     }
   }
 
+  const deleteAll = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault()
+
+    let secScreen: HTMLParagraphElement = document.getElementById("calc-small-output") as HTMLParagraphElement
+    secScreen.classList.add("invisible")
+
+    setExpression("0")
+    setSecExpression("0")
+    setIsOperatorPressed(false)
+    setIsDecimalPressed(false)
+    setIsPlusMinusPressed(false)
+  }
+
   return (
     <div className="h-screen w-100 flex flex-col justify-center items-center bg-backdrop">
       <div id="calc" className="bg-front w-2/3 xs:w-1/3 md:w-2/3 lg:w-1/2 xl:w-1/4">
@@ -89,7 +102,7 @@ function App() {
         <p id="calc-output" className="mx-5 pb-5 text-main-color text-5xl font-medium overflow-hidden flex flex-1 justify-end items-end">{expression}</p>
         <div id="calc-keys" className="flex flex-wrap justify-between items-start">
           {/* First Row */}
-          <button className="py-4 text-center font-semibold text-keys-color text-3xl bg-keys w-1/4 hover:bg-hover">AC</button>
+          <button onClick={(e) => deleteAll(e)} className="py-4 text-center font-semibold text-keys-color text-3xl bg-keys w-1/4 hover:bg-hover">AC</button>
           <button onClick={(e) => showPlusMinusInScreen(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">+/-</button>
           <button onClick={(e) => showPercentInScreen(e)} className="py-4 text-center font-thin text-main-color text-3xl bg-keys w-1/4 hover:bg-hover">%</button>
           <button className="py-4 text-center text-3xl font-bold bg-operator-keys text-operator-color w-1/4 hover:bg-hover">&divide;</button>
